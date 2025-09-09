@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="zh-CN">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>单键打字练习</title>
+        <style>
+            body {
+                font-family: Arial, sans-serif;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                height: 100vh;
+                margin: 0;
+                background-color: #f5f5f5;
+            }
+            .container {
+                text-align: center;
+                background-color: white;
+                padding: 30px;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            }
+            .character {
+                font-size: 72px;
+                margin: 20px 0;
+                height: 100px;
+            }
+            .message {
+                height: 24px;
+                margin: 10px 0;
+                color: #ff4444;
+            }
+            .stats {
+                margin-top: 20px;
+                font-size: 14px;
+                color: #666;
+            }
+            .instructions {
+                margin-top: 30px;
+                font-size: 14px;
+                color: #666;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h1>单键打字练习</h1>
+            <div class="character" id="character">?</div>
+            <div class="message" id="message"></div>
+            <div class="stats">
+                正确: <span id="correct">0</span> | 错误:
+                <span id="wrong">0</span>
+            </div>
+            <div class="instructions">按下键盘上对应的按键来匹配显示的字符</div>
+        </div>
+
+        <script>
+            // 配置字表和对应的按键
+            const characterMap = [
+                { char: "丨丨", key: "a" },
+                { char: "乙丿", key: "b" },
+                { char: "乙乙", key: "c" },
+                { char: "丨乙", key: "d" },
+                { char: "丿乙", key: "e" },
+                { char: "丨一", key: "f" },
+                { char: "丨丿", key: "g" },
+                { char: "一丿", key: "h" },
+                { char: "丶乙", key: "i" },
+                { char: "一一", key: "j" },
+                { char: "一乙", key: "k" },
+                { char: "一丶", key: "l" },
+                { char: "一丨", key: "m" },
+                { char: "乙丨", key: "n" },
+                { char: "丶丶", key: "o" },
+                { char: "丶丨", key: "p" },
+                { char: "丿丨", key: "q" },
+                { char: "丿一", key: "r" },
+                { char: "丨丶", key: "s" },
+                { char: "丿丿", key: "t" },
+                { char: "丶一", key: "u" },
+                { char: "乙一", key: "v" },
+                { char: "丿丶", key: "w" },
+                { char: "乙丶", key: "x" },
+                { char: "丶丿", key: "y" },
+            ];
+
+            // 状态变量
+            let currentChar = null;
+            let correctCount = 0;
+            let wrongCount = 0;
+
+            // DOM 元素
+            const characterElement = document.getElementById("character");
+            const messageElement = document.getElementById("message");
+            const correctElement = document.getElementById("correct");
+            const wrongElement = document.getElementById("wrong");
+
+            // 随机选择一个字符
+            function getRandomChar() {
+                const randomIndex = Math.floor(
+                    Math.random() * characterMap.length,
+                );
+                return characterMap[randomIndex];
+            }
+
+            // 显示新字符
+            function showNewChar() {
+                currentChar = getRandomChar();
+                characterElement.textContent = currentChar.char;
+                messageElement.textContent = "";
+            }
+
+            // 初始化
+            function init() {
+                showNewChar();
+
+                // 监听键盘事件
+                document.addEventListener("keydown", (event) => {
+                    // 忽略特殊键
+                    if (event.ctrlKey || event.altKey || event.metaKey) {
+                        return;
+                    }
+
+                    const pressedKey = event.key.toLowerCase();
+
+                    if (pressedKey === currentChar.key) {
+                        // 正确按键
+                        correctCount++;
+                        correctElement.textContent = correctCount;
+                        showNewChar();
+                    } else {
+                        // 错误按键
+                        wrongCount++;
+                        wrongElement.textContent = wrongCount;
+                        messageElement.textContent =
+                            "错误! 正确为" + currentChar.key;
+                    }
+                });
+            }
+
+            // 启动应用
+            init();
+        </script>
+    </body>
+</html>
