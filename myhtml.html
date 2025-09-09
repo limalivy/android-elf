@@ -42,6 +42,65 @@
                 font-size: 14px;
                 color: #666;
             }
+            .image-container {
+            width: 100%;
+            max-width: 700px;
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            text-align: center;
+        }
+        
+        .image-container h2 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .keyboard-image {
+            width: 100%;
+            overflow: hidden;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .keyboard-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s ease;
+        }
+        
+        .keyboard-image img:hover {
+            transform: scale(1.02);
+        }
+        
+        .image-note {
+            margin-top: 15px;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+        
+        @media (max-width: 600px) {
+            .container, .image-container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8rem;
+            }
+            
+            .character {
+                font-size: 60px;
+                height: 90px;
+            }
+            
+            .stats {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+        }
         </style>
     </head>
     <body>
@@ -54,6 +113,14 @@
                 <span id="wrong">0</span>
             </div>
             <div class="instructions">按下键盘上对应的按键来匹配显示的字符</div>
+            <div class="image-container">
+                <h2>键盘指法参考</h2>
+                    <div class="keyboard-image">
+                        <!-- 使用实际图片URL替换此处 -->
+                        <img src="https://lbzj.github.io/img/keyboard1.png" alt="键盘指法示意图">
+                    </div>
+                    <p class="image-note">图片可滚动缩放，鼠标悬停有放大效果</p>
+            </div>
         </div>
 
         <script>
