@@ -47,6 +47,7 @@
             max-width: 700px;
             background: white;
             padding: 20px;
+            margin-top: 30px;
             border-radius: 15px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
             text-align: center;
@@ -126,37 +127,39 @@
         <script>
             // 配置字表和对应的按键
             const characterMap = [
-                { char: "丨丨", key: "a" },
-                { char: "乙丿", key: "b" },
-                { char: "乙乙", key: "c" },
-                { char: "丨乙", key: "d" },
-                { char: "丿乙", key: "e" },
-                { char: "丨一", key: "f" },
-                { char: "丨丿", key: "g" },
-                { char: "一丿", key: "h" },
-                { char: "丶乙", key: "i" },
-                { char: "一一", key: "j" },
-                { char: "一乙", key: "k" },
-                { char: "一丶", key: "l" },
-                { char: "一丨", key: "m" },
-                { char: "乙丨", key: "n" },
-                { char: "丶丶", key: "o" },
-                { char: "丶丨", key: "p" },
-                { char: "丿丨", key: "q" },
-                { char: "丿一", key: "r" },
-                { char: "丨丶", key: "s" },
-                { char: "丿丿", key: "t" },
-                { char: "丶一", key: "u" },
-                { char: "乙一", key: "v" },
-                { char: "丿丶", key: "w" },
-                { char: "乙丶", key: "x" },
-                { char: "丶丿", key: "y" },
+                { char: "丨丨", key: "A" },
+                { char: "㇇丿", key: "B" },
+                { char: "㇇㇇", key: "C" },
+                { char: "丨㇇", key: "D" },
+                { char: "丿㇇", key: "E" },
+                { char: "丨一", key: "F" },
+                { char: "丨丿", key: "G" },
+                { char: "一丿", key: "H" },
+                { char: "丶㇇", key: "I" },
+                { char: "一一", key: "J" },
+                { char: "一㇇", key: "K" },
+                { char: "一丶", key: "L" },
+                { char: "一丨", key: "M" },
+                { char: "㇇丨", key: "N" },
+                { char: "丶丶", key: "O" },
+                { char: "丶丨", key: "P" },
+                { char: "丿丨", key: "Q" },
+                { char: "丿一", key: "R" },
+                { char: "丨丶", key: "S" },
+                { char: "丿丿", key: "T" },
+                { char: "丶一", key: "U" },
+                { char: "㇇一", key: "V" },
+                { char: "丿丶", key: "W" },
+                { char: "㇇丶", key: "X" },
+                { char: "丶丿", key: "Y" },
             ];
 
             // 状态变量
             let currentChar = null;
             let correctCount = 0;
             let wrongCount = 0;
+            let lastKeyTime = 0; // 记录上次按键时间
+            const DEBOUNCE_DELAY = 200; // 防抖延迟时间(毫秒)
 
             // DOM 元素
             const characterElement = document.getElementById("character");
@@ -190,7 +193,14 @@
                         return;
                     }
 
-                    const pressedKey = event.key.toLowerCase();
+                    // 防抖处理：如果两次按键间隔太短，忽略后续按键
+                    const currentTime = new Date().getTime();
+                    if (currentTime - lastKeyTime < DEBOUNCE_DELAY) {
+                        return;
+                    }
+                    lastKeyTime = currentTime;
+
+                    const pressedKey = event.key.toUpperCase();
 
                     if (pressedKey === currentChar.key) {
                         // 正确按键
